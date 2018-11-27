@@ -1,0 +1,25 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "90S9sFqcIo/uuwQzz1t/wYs7GEs=",
+			"path": "github.com/gin-gonic/gin",
+			"revision": "b869fe1415e4b9eb52f247441830d502aece2d4d",
+			"revisionTime": "2018-08-14T08:58:52Z",
+			"version": "v1.3",
+			"versionExact": "v1.3.0"
+		},
+		{
+			"checksumSHA1": "lnXCQ0W+TUrintwU69ljmXf5o+k=",
+			"path": "github.com/gorilla/websocket",
+			"revision": "483fb8d7c32fcb4b5636cd293a92e3935932e2f4",
+			"revisionTime": "2018-10-30T14:45:53Z"
+		},
+		{
+			"path": "golang.org/x/net/context",
+			"revision": ""
+		}
+	],
+	"rootPath": "github.com/go_init"
+}
