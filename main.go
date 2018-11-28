@@ -27,7 +27,7 @@ func main() {
 	defer models.DB.Close()
 
 	gin.SetMode(serverConfig.RunMode)
-	gin.DisableConsoleColor()
+	//gin.DisableConsoleColor()
 
 	//set the number of CPU processor will be used
 	runtime.GOMAXPROCS(runtime.NumCPU())

@@ -1,6 +1,6 @@
 ## Introduce
 
-    这是一个基于golang框架和其他一些项目组织的一个包含mysql, redis,rabbitmq,websocket等操作的一个项目结构。
+    这是一个基于gin框架和其他一些项目组织的一个包含mysql, redis,rabbitmq,websocket等操作的一个项目结构。
 
     主要目的是希望为golang web开发入门者提供一个学习和简单项目组织结构。更加方便进行开发和一些核心组件的研究，
 
