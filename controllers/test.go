@@ -90,8 +90,8 @@ func (t *TestController) UptUser(c *gin.Context) {
 
 	data["username"] = c.PostForm("name")
 	data["password"] = helpers.EncodeMD5(c.PostForm("password"))
-	data["age"] = c.PostForm("age")
-	data["gender"] = c.PostForm("gender")
+	data["age"], _ = strconv.Atoi(c.DefaultPostForm("age", "20"))
+	data["gender"], _ = strconv.Atoi(c.DefaultPostForm("gender", "1"))
 	data["email"] = c.PostForm("email")
 	data["updated_at"] = time.Now().Unix()
 

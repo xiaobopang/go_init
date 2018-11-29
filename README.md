@@ -223,6 +223,62 @@
 
 ```
 
+### websocket 示例
+
+```
+        package controllers
+
+        import (
+                "fmt"
+                "github.com/gorilla/websocket"
+                "net/http"
+                "time"
+        )
+        
+        type WsController struct{}
+
+        var wsupgrader = websocket.Upgrader{
+                ReadBufferSize:    4096,
+                WriteBufferSize:   4096,
+                EnableCompression: true,
+                HandshakeTimeout:  5 * time.Second,
+                // CheckOrigin: 处理跨域问题，线上环境慎用
+                CheckOrigin: func(r *http.Request) bool {
+                        return true
+                },
+        }
+
+        func (ws *WsController) WsHandler(w http.ResponseWriter, r *http.Request) {
+                conn, err := wsupgrader.Upgrade(w, r, nil)
+                if err != nil {
+                        fmt.Println(err)
+                        return
+                }
+
+                for {
+                        msgType, msg, err := conn.ReadMessage()
+                        if err != nil {
+                                fmt.Println(err)
+                                return
+                        }
+                        if string(msg) == "ping" {
+                                fmt.Println("ping")
+                                time.Sleep(time.Second * 2)
+                                err = conn.WriteMessage(msgType, []byte("pong"))
+                                if err != nil {
+                                        fmt.Println(err)
+                                        return
+                                }
+                        } else {
+                                conn.Close()
+                                fmt.Println(string(msg))
+                                return
+                        }
+                }
+        }
+
+```
+
 
 ## 如果你使用的是MacOS,那么Mac下编译Linux, Windows平台的64位可执行程序如下：
 
