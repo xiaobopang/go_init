@@ -81,6 +81,18 @@
 			"revisionTime": "2018-08-30T10:17:45Z"
 		},
 		{
+			"checksumSHA1": "K8QsnZLV9n7jHaNr9jySy1P96LY=",
+			"path": "github.com/orcaman/concurrent-map",
+			"revision": "b28018939af9022337862b94a463abb18abb3e0e",
+			"revisionTime": "2018-07-23T18:39:37Z"
+		},
+		{
+			"checksumSHA1": "Tutue3nEgM/87jitUcYv6ODwyNE=",
+			"path": "github.com/satori/go.uuid",
+			"revision": "b2ce2384e17bbe0c6d34077efa39dbab3e09123b",
+			"revisionTime": "2018-10-28T12:50:25Z"
+		},
+		{
 			"checksumSHA1": "blX+7nyMMUIGgxTR/B3YlfcrsJ8=",
 			"path": "github.com/ugorji/go/codec",
 			"revision": "e253f1f20942cb6dc505e504e8bbba4b7f434cb2",

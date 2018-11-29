@@ -6,7 +6,7 @@ package routers
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-27 18:19:27
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-11-29 10:36:47
+ * @Last Modified At: 2018-11-29 15:57:37
  * @Description: This is description.
  */
 
@@ -19,10 +19,9 @@ import (
 
 var indexCtl = new(controllers.IndexController)
 var testCtl = new(controllers.TestController)
-var wsCtl = new(controllers.WsController)
+var wsCtl = new(controllers.Wscontroller)
 
 func SetupRouter() *gin.Engine {
-
 	router := gin.Default()
 	router.Use(gin.Recovery())
 	//router.Use(gin.Logger())
@@ -32,6 +31,7 @@ func SetupRouter() *gin.Engine {
 	router.GET("/redirect", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "https://www.unclepang.com/")
 	})
+
 	router.GET("/ws", func(c *gin.Context) {
 		wsCtl.WsHandler(c.Writer, c.Request)
 	})
