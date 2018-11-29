@@ -226,6 +226,7 @@
 ### websocket 示例
 
 ```
+
         package controllers
 
         import (
@@ -234,7 +235,7 @@
                 "net/http"
                 "time"
         )
-        
+
         type WsController struct{}
 
         var wsupgrader = websocket.Upgrader{
@@ -251,10 +252,13 @@
         func (ws *WsController) WsHandler(w http.ResponseWriter, r *http.Request) {
                 conn, err := wsupgrader.Upgrade(w, r, nil)
                 if err != nil {
-                        fmt.Println(err)
+                        http.Error(w, "Could not open websocket connection", http.StatusBadRequest)
                         return
                 }
+                go echo(conn)
+        }
 
+        func echo(conn *websocket.Conn) {
                 for {
                         msgType, msg, err := conn.ReadMessage()
                         if err != nil {
