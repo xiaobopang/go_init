@@ -1,16 +1,18 @@
 ## Introduce
 
-    这是一个基于gin框架和其他一些项目组织的一个包含mysql, redis,rabbitmq,websocket等操作的一个项目结构。
+    这是一个基于gin搭建的一个包含gorm, goredis,rabbitmq,websocket等操作相关操作的项目结构。
 
-    主要目的是希望为golang web开发入门者提供一个学习和简单项目组织结构。更加方便进行开发和一些核心组件的研究，
+    主要提供一些库和组件的实现案例，以及项目开发部署，发布，执行等流程。纯属个人兴趣，学习整理过程
+    
+    如有发现不合理的地方希望可以大家可以提出建议和指正。
 
-    以及项目开发完成后的部署，发布，执行等流程。
+    通过 go build -o go_init main.go 来生成执行文件
+    
+    启动服务：./run.sh start
 
-    可通过 go build -o go_init main.go 来生成执行文件，然后执行：./run.sh start 即可启动相关服务。
+    停止服务：./run.sh stop
 
-    要想停止服务可执行：./run.sh stop
-
-    注意⚠️：有可能出现没有执行权限的情况：可运行: sudo chmod +x run.sh来解决
+    注意：有可能出现没有执行权限的情况，执行 sudo chmod +x run.sh来解决
 
 
 
@@ -385,6 +387,8 @@
                         close(wsConn.closeChan)
                 }
         }
+
+        前端通过访问 ws://localhost:7777/ws 即可与服务端建立websocket连接。
 
 ```
 
