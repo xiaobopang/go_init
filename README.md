@@ -2,9 +2,7 @@
 
     这是一个基于gin搭建的一个包含gorm, goredis,rabbitmq,websocket等操作相关操作的项目结构。
 
-    主要提供一些库和组件的实现案例，以及项目开发部署，发布，执行等流程。纯属个人兴趣，学习整理过程
-    
-    如有发现不合理的地方希望可以大家可以提出建议和指正。
+    主要提供一些库和组件的实现案例，以及项目开发部署，发布，执行等流程。纯属个人兴趣，学习整理过程，如有发现不合理的地方希望可以大家可以提出建议和指正。
 
     通过 go build -o go_init main.go 来生成执行文件
     
@@ -227,6 +225,8 @@
 
 ### websocket 示例
 
+#####  前端通过访问 ws://localhost:7777/ws 即可与服务端建立websocket连接
+
 ```
         package controllers
 
@@ -387,8 +387,6 @@
                         close(wsConn.closeChan)
                 }
         }
-
-        前端通过访问 ws://localhost:7777/ws 即可与服务端建立websocket连接。
 
 ```
 
