@@ -6,7 +6,7 @@ package routers
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-27 18:19:27
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-11-29 15:57:37
+ * @Last Modified At: 2018-11-29 16:40:12
  * @Description: This is description.
  */
 
@@ -19,7 +19,7 @@ import (
 
 var indexCtl = new(controllers.IndexController)
 var testCtl = new(controllers.TestController)
-var wsCtl = new(controllers.Wscontroller)
+var wsCtl = new(controllers.WsController)
 
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
