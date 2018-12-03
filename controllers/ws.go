@@ -6,7 +6,7 @@ package controllers
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-29 10:36:11
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-11-29 15:57:56
+ * @Last Modified At: 2018-11-29 16:52:00
  * @Description: This is description.
  */
 
@@ -18,6 +18,8 @@ import (
 	"sync"
 	"time"
 )
+
+type WsController struct{}
 
 var wsUpgrader = websocket.Upgrader{
 	ReadBufferSize:    4096,
@@ -35,7 +37,6 @@ type wsMessage struct {
 	messageType int
 	data        []byte
 }
-type Wscontroller struct{}
 
 // 客户端连接
 type wsConnection struct {
@@ -43,7 +44,7 @@ type wsConnection struct {
 	inChan   chan *wsMessage // 读队列
 	outChan  chan *wsMessage // 写队列
 
-	mutex     sync.Mutex // 避免重复关闭管道
+	mutex     sync.Mutex // Mutex互斥锁，避免重复关闭管道
 	isClosed  bool
 	closeChan chan byte // 关闭通知
 }
@@ -55,10 +56,19 @@ func (wsConn *wsConnection) wsReadLoop() {
 		if err != nil {
 			goto error
 		}
-		req := &wsMessage{
-			msgType,
-			data,
+		req := &wsMessage{}
+		if string(data) == "test" {
+			req = &wsMessage{
+				msgType,
+				[]byte("Hi, this is a test websocket"),
+			}
+		} else {
+			req = &wsMessage{
+				msgType,
+				data,
+			}
 		}
+
 		// 放入请求队列
 		select {
 		case wsConn.inChan <- req:
@@ -69,7 +79,9 @@ func (wsConn *wsConnection) wsReadLoop() {
 error:
 	wsConn.wsClose()
 closed:
+	fmt.Println("websocket is closed.")
 }
+
 func (wsConn *wsConnection) wsWriteLoop() {
 	for {
 		select {
@@ -86,6 +98,7 @@ func (wsConn *wsConnection) wsWriteLoop() {
 error:
 	wsConn.wsClose()
 closed:
+	fmt.Println("websocket is closed.")
 }
 
 func (wsConn *wsConnection) procLoop() {
@@ -117,7 +130,7 @@ func (wsConn *wsConnection) procLoop() {
 	}
 }
 
-func (w *Wscontroller) WsHandler(resp http.ResponseWriter, req *http.Request) {
+func (w *WsController) WsHandler(resp http.ResponseWriter, req *http.Request) {
 	// 应答客户端告知升级连接为websocket
 	wsSocket, err := wsUpgrader.Upgrade(resp, req, nil)
 	if err != nil {
