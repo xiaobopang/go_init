@@ -6,7 +6,7 @@ package routers
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-27 18:19:27
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-11-29 16:40:12
+ * @Last Modified At: 2018-12-06 21:32:35
  * @Description: This is description.
  */
 
@@ -20,6 +20,7 @@ import (
 var indexCtl = new(controllers.IndexController)
 var testCtl = new(controllers.TestController)
 var wsCtl = new(controllers.WsController)
+var mqCtl = new(controllers.MqController)
 
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
@@ -31,7 +32,18 @@ func SetupRouter() *gin.Engine {
 	router.GET("/redirect", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "https://www.unclepang.com/")
 	})
-
+	router.GET("/exchange", func(c *gin.Context) {
+		mqCtl.ExchangeHandler(c.Writer, c.Request)
+	})
+	router.POST("/queue/bind", func(c *gin.Context) {
+		mqCtl.QueueBindHandler(c.Writer, c.Request)
+	})
+	router.GET("/queue", func(c *gin.Context) {
+		mqCtl.QueueHandler(c.Writer, c.Request)
+	})
+	router.GET("/publish", func(c *gin.Context) {
+		mqCtl.PublishHandler(c.Writer, c.Request)
+	})
 	router.GET("/ws", func(c *gin.Context) {
 		wsCtl.WsHandler(c.Writer, c.Request)
 	})

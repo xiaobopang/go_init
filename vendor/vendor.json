@@ -93,6 +93,12 @@
 			"revisionTime": "2018-10-28T12:50:25Z"
 		},
 		{
+			"checksumSHA1": "2wk7pDmxi7LoAHtIQTDEWt9F8/A=",
+			"path": "github.com/streadway/amqp",
+			"revision": "a314942b2fd9dde7a3f70ba3f1062848ce6eb392",
+			"revisionTime": "2018-12-05T11:43:30Z"
+		},
+		{
 			"checksumSHA1": "r5mYMnU412QZoiUqOxq/mJLYc4M=",
 			"path": "github.com/ugorji/go/codec",
 			"revision": "e253f1f20942cb6dc505e504e8bbba4b7f434cb2",
