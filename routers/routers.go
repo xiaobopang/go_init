@@ -6,7 +6,7 @@ package routers
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-27 18:19:27
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-12-06 21:32:35
+ * @Last Modified At: 2018-12-06 21:58:18
  * @Description: This is description.
  */
 
@@ -32,7 +32,7 @@ func SetupRouter() *gin.Engine {
 	router.GET("/redirect", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "https://www.unclepang.com/")
 	})
-	router.GET("/exchange", func(c *gin.Context) {
+	router.POST("/exchange", func(c *gin.Context) {
 		mqCtl.ExchangeHandler(c.Writer, c.Request)
 	})
 	router.POST("/queue/bind", func(c *gin.Context) {
@@ -40,8 +40,14 @@ func SetupRouter() *gin.Engine {
 	})
 	router.GET("/queue", func(c *gin.Context) {
 		mqCtl.QueueHandler(c.Writer, c.Request)
-	})
-	router.GET("/publish", func(c *gin.Context) {
+	}) //consume queue
+	router.POST("/queue", func(c *gin.Context) {
+		mqCtl.QueueHandler(c.Writer, c.Request)
+	}) //declare queue
+	router.DELETE("/queue", func(c *gin.Context) {
+		mqCtl.QueueHandler(c.Writer, c.Request)
+	}) //delete queue
+	router.POST("/publish", func(c *gin.Context) {
 		mqCtl.PublishHandler(c.Writer, c.Request)
 	})
 	router.GET("/ws", func(c *gin.Context) {

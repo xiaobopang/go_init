@@ -413,10 +413,12 @@
 
 ```
 
+
+
 ### RabbitMQ 示例
 
 ```
-      package controllers
+        package controllers
 
         import (
                 "encoding/json"
