@@ -782,8 +782,8 @@
 
         {
                 "name":"test",
-                "durable":true,
-                "autodelete":false,
+                "durable":false,
+                "autodelete":true,
                 "exclusive":false,
                 "nowait":false
         }
@@ -792,11 +792,11 @@
 
         http://127.0.0.1:7777/exchange POST
 
-        {
+       {
                 "name":"test",
-                "type":"topic",
-                "durable":true,
-                "autodelete":false,
+                "type":"direct",
+                "durable":false,
+                "autodelete":true,
                 "nowait":false
         }
 
@@ -806,11 +806,13 @@
 
         {
                 "exchange":"test",
-                "key":"666",
+                "key":"router",
                 "deliverymode":6,
                 "priority":3,
                 "body":"this is a message from test."
         }
+
+
 
 
 ## 如果你使用的是MacOS,那么Mac下编译Linux, Windows平台的64位可执行程序如下：
