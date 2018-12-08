@@ -12,11 +12,12 @@ package controllers
 
 import (
 	"fmt"
+	"strconv"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/go_init/helpers"
 	"github.com/go_init/models"
-	"strconv"
-	"time"
 )
 
 type TestController struct{}

@@ -11,10 +11,11 @@ package routers
  */
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/go_init/controllers"
 	"github.com/go_init/middleware"
-	"net/http"
 )
 
 var indexCtl = new(controllers.IndexController)

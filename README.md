@@ -424,10 +424,11 @@
                 "encoding/json"
                 "flag"
                 "fmt"
-                "github.com/streadway/amqp"
                 "io/ioutil"
                 "log"
                 "net/http"
+
+                "github.com/streadway/amqp"
         )
 
         var (
@@ -596,6 +597,11 @@
         // HTTP Handlers
         func (m *MqController) QueueHandler(w http.ResponseWriter, r *http.Request) {
                 if r.Method == "POST" || r.Method == "DELETE" {
+                        if r.Body == nil {
+                                fmt.Println("missing form body")
+                                return
+                        }
+
                         body, err := ioutil.ReadAll(r.Body)
                         if err != nil {
                                 http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -630,7 +636,6 @@
                         }
                 } else if r.Method == "GET" {
                         r.ParseForm()
-
                         rabbit := new(RabbitMQ)
                         if err := rabbit.Connect(); err != nil {
                                 http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -642,6 +647,7 @@
 
                         for _, name := range r.Form["name"] {
                                 if err := rabbit.ConsumeQueue(name, message); err != nil {
+                                        fmt.Println("Receive message ", message)
                                         http.Error(w, err.Error(), http.StatusInternalServerError)
                                         return
                                 }
@@ -769,6 +775,42 @@
         }
 
 ```
+
+#### 声明queue，注意：你的request格式必须是 Content-Type:application/json
+
+        http://127.0.0.1:7777/queue POST
+
+        {
+                "name":"test",
+                "durable":true,
+                "autodelete":false,
+                "exclusive":false,
+                "nowait":false
+        }
+
+#### 声明exchange,注意：你的request格式必须是 Content-Type:application/json
+
+        http://127.0.0.1:7777/exchange POST
+
+        {
+                "name":"test",
+                "type":"topic",
+                "durable":true,
+                "autodelete":false,
+                "nowait":false
+        }
+
+#### pusblish messge,注意：你的request格式必须是 Content-Type:application/json
+
+        http://127.0.0.1:7777/publish POST
+
+        {
+                "exchange":"test",
+                "key":"666",
+                "deliverymode":6,
+                "priority":3,
+                "body":"this is a message from test."
+        }
 
 
 ## 如果你使用的是MacOS,那么Mac下编译Linux, Windows平台的64位可执行程序如下：

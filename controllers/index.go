@@ -11,9 +11,10 @@ package controllers
  */
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 type IndexController struct{}
@@ -25,6 +26,7 @@ func (i *IndexController) Welcome(c *gin.Context) {
 		"data":      nil,
 		"timestamp": time.Now().Unix(),
 	})
+
 	return
 }
 

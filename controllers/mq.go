@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/streadway/amqp"
 	"io/ioutil"
 	"log"
 	"net/http"
+
+	"github.com/streadway/amqp"
 )
 
 var (
@@ -176,6 +177,11 @@ func (r *RabbitMQ) Close() (err error) {
 // HTTP Handlers
 func (m *MqController) QueueHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" || r.Method == "DELETE" {
+		if r.Body == nil {
+			fmt.Println("missing form body")
+			return
+		}
+
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -210,7 +216,6 @@ func (m *MqController) QueueHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	} else if r.Method == "GET" {
 		r.ParseForm()
-
 		rabbit := new(RabbitMQ)
 		if err := rabbit.Connect(); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -222,6 +227,7 @@ func (m *MqController) QueueHandler(w http.ResponseWriter, r *http.Request) {
 
 		for _, name := range r.Form["name"] {
 			if err := rabbit.ConsumeQueue(name, message); err != nil {
+				fmt.Println("Receive message ", message)
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
