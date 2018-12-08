@@ -800,6 +800,17 @@
                 "nowait":false
         }
 
+#### 绑定queue，注意：你的request格式必须是 Content-Type:application/json
+
+        http://127.0.0.1:7777/queue/bind POST
+
+        {
+                "queue":"test",
+                "exchange":"test",
+                "nowait":false,
+                "keys": ["router"]
+        }
+
 #### pusblish messge,注意：你的request格式必须是 Content-Type:application/json
 
         http://127.0.0.1:7777/publish POST
@@ -807,8 +818,8 @@
         {
                 "exchange":"test",
                 "key":"router",
-                "deliverymode":6,
-                "priority":3,
+                "deliverymode":2,  //1:不用持久化，2:消息持久化
+                "priority":3,  //优先级 （一般情况下1-10之间）
                 "body":"this is a message from test."
         }
 

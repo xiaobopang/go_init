@@ -227,7 +227,6 @@ func (m *MqController) QueueHandler(w http.ResponseWriter, r *http.Request) {
 
 		for _, name := range r.Form["name"] {
 			if err := rabbit.ConsumeQueue(name, message); err != nil {
-				fmt.Println("Receive message ", message)
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
@@ -237,6 +236,7 @@ func (m *MqController) QueueHandler(w http.ResponseWriter, r *http.Request) {
 		w.(http.Flusher).Flush()
 
 		for {
+			fmt.Printf(" Received message %s\n", <-message)
 			fmt.Fprintf(w, "%s\n", <-message)
 			w.(http.Flusher).Flush()
 		}
@@ -309,7 +309,7 @@ func (m *MqController) PublishHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		w.Write([]byte("publish message ok"))
+		w.Write([]byte("publish message ok => " + entity.Body))
 	} else {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
