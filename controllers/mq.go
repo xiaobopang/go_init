@@ -177,6 +177,7 @@ func (r *RabbitMQ) Close() (err error) {
 // HTTP Handlers
 func (m *MqController) QueueHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" || r.Method == "DELETE" {
+
 		if r.Body == nil {
 			fmt.Println("missing form body")
 			return
@@ -237,7 +238,7 @@ func (m *MqController) QueueHandler(w http.ResponseWriter, r *http.Request) {
 
 		for {
 			fmt.Printf(" Received message %s\n", <-message)
-			fmt.Fprintf(w, "%s\n", <-message)
+			//fmt.Fprintf(w, "%s\n", <-message)
 			w.(http.Flusher).Flush()
 		}
 	} else {
