@@ -6,7 +6,7 @@ package routers
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-27 18:19:27
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-12-06 21:58:18
+ * @Last Modified At: 2018-12-11 14:39:43
  * @Description: This is description.
  */
 
@@ -30,6 +30,8 @@ func SetupRouter() *gin.Engine {
 
 	router.GET("/", indexCtl.Welcome)
 	router.NoRoute(indexCtl.Handle404)
+	router.GET("/redis", testCtl.RedisTest) //redis 测试
+
 	router.GET("/redirect", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "https://www.unclepang.com/")
 	})

@@ -6,18 +6,19 @@ package controllers
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-06 14:50:15
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-11-27 19:49:48
+ * @Last Modified At: 2018-12-11 14:39:12
  * @Description: This is description.
  */
 
 import (
+	"encoding/json"
 	"fmt"
-	"strconv"
-	"time"
-
 	"github.com/gin-gonic/gin"
 	"github.com/go_init/helpers"
+	"github.com/go_init/libs"
 	"github.com/go_init/models"
+	"strconv"
+	"time"
 )
 
 type TestController struct{}
@@ -101,6 +102,32 @@ func (t *TestController) UptUser(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code":      200,
 		"data":      res,
+		"msg":       "success",
+		"timestamp": time.Now().Unix(),
+	})
+}
+
+//Redis 测试
+func (t *TestController) RedisTest(c *gin.Context) {
+	redisKey := c.Query("redisKey")
+	fmt.Println(redisKey)
+	userInfo, err := libs.GetKey(redisKey)
+	if err != nil {
+		data := make(map[string]interface{})
+		data["username"] = "jack"
+		data["age"] = 22
+		data["gender"] = "man"
+		data["email"] = "test@test.com"
+		data["updated_at"] = time.Now().Unix()
+		userInfo, err := json.Marshal(data)
+		libs.SetKey(redisKey, userInfo, 3600)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	c.JSON(200, gin.H{
+		"code":      200,
+		"data":      userInfo,
 		"msg":       "success",
 		"timestamp": time.Now().Unix(),
 	})

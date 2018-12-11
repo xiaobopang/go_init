@@ -26,16 +26,17 @@
         package routers
 
         import (
+                "net/http"
+
                 "github.com/gin-gonic/gin"
                 "github.com/go_init/controllers"
                 "github.com/go_init/middleware"
-                "net/http"
         )
 
         var indexCtl = new(controllers.IndexController)
         var testCtl = new(controllers.TestController)
-        var wsCtl = new(controllers.WsController)  //websocket controller
-        var mqCtl = new(controllers.MqController)  // rabbitmq controller
+        var wsCtl = new(controllers.WsController)
+        var mqCtl = new(controllers.MqController)
 
         func SetupRouter() *gin.Engine {
                 router := gin.Default()
@@ -44,10 +45,12 @@
 
                 router.GET("/", indexCtl.Welcome)
                 router.NoRoute(indexCtl.Handle404)
+                router.GET("/redis", testCtl.RedisTest) //redis测试
+
                 router.GET("/redirect", func(c *gin.Context) {
                         c.Redirect(http.StatusMovedPermanently, "https://www.unclepang.com/")
                 })
-                router.GET("/exchange", func(c *gin.Context) {
+                router.POST("/exchange", func(c *gin.Context) {
                         mqCtl.ExchangeHandler(c.Writer, c.Request)
                 })
                 router.POST("/queue/bind", func(c *gin.Context) {
@@ -55,8 +58,14 @@
                 })
                 router.GET("/queue", func(c *gin.Context) {
                         mqCtl.QueueHandler(c.Writer, c.Request)
-                })
-                router.GET("/publish", func(c *gin.Context) {
+                }) //consume queue
+                router.POST("/queue", func(c *gin.Context) {
+                        mqCtl.QueueHandler(c.Writer, c.Request)
+                }) //declare queue
+                router.DELETE("/queue", func(c *gin.Context) {
+                        mqCtl.QueueHandler(c.Writer, c.Request)
+                }) //delete queue
+                router.POST("/publish", func(c *gin.Context) {
                         mqCtl.PublishHandler(c.Writer, c.Request)
                 })
                 router.GET("/ws", func(c *gin.Context) {
@@ -80,7 +89,6 @@
 
                 return router
         }
-
 
 ```
 
@@ -822,6 +830,14 @@
                 "priority":3,  //优先级 （一般情况下1-10之间）
                 "body":"this is a message from test."
         }
+
+
+
+#### 消费queue
+
+        http://127.0.0.1:7777/queue?name=test   GET
+
+
 
 
 
