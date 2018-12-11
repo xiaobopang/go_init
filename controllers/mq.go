@@ -1,5 +1,13 @@
 package controllers
 
+/*
+ * Created Date: Saturday December 8th 2018
+ * Author: Pangxiaobo
+ * Last Modified: Saturday December 8th 2018 1:46:07 pm
+ * Modified By: the developer formerly known as Pangxiaobo at <10846295@qq.com>
+ * Copyright (c) 2018 Pangxiaobo
+ */
+
 import (
 	"encoding/json"
 	"flag"

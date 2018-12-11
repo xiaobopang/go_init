@@ -1,5 +1,13 @@
 package helpers
 
+/*
+ * Created Date: Friday December 7th 2018
+ * Author: Pangxiaobo
+ * Last Modified: Friday December 7th 2018 6:27:55 pm
+ * Modified By: the developer formerly known as Pangxiaobo at <10846295@qq.com>
+ * Copyright (c) 2018 Pangxiaobo
+ */
+
 import (
 	"crypto/md5"
 	"encoding/hex"

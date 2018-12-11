@@ -13,10 +13,11 @@ package controllers
 import (
 	"errors"
 	"fmt"
-	"github.com/gorilla/websocket"
 	"net/http"
 	"sync"
 	"time"
+
+	"github.com/gorilla/websocket"
 )
 
 type WsController struct{}
