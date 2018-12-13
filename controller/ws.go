@@ -1,12 +1,12 @@
-package controllers
+package controller
 
 /*
- * @Script: ws.go
+ * @Script: test.go
  * @Author: pangxiaobo
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-29 10:36:11
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-11-29 16:52:00
+ * @Last Modified At: 2018-12-12 14:24:09
  * @Description: This is description.
  */
 

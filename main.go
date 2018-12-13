@@ -6,25 +6,25 @@ package main
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-06 14:49:41
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-12-11 14:21:00
+ * @Last Modified At: 2018-12-12 14:26:36
  * @Description: This is description.
  */
 
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/go_init/libs"
-	"github.com/go_init/models"
-	"github.com/go_init/routers"
+	"github.com/go_init/lib"
+	"github.com/go_init/model"
+	"github.com/go_init/router"
 	"net/http"
 	"runtime"
 )
 
 func main() {
 
-	serverConfig := libs.LoadServerConfig()
-	models.InitDB(serverConfig)
-	defer models.DB.Close()
+	serverConfig := lib.LoadServerConfig()
+	model.InitDB(serverConfig)
+	defer model.DB.Close()
 
 	gin.SetMode(serverConfig.RunMode)
 	//gin.DisableConsoleColor()

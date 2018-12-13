@@ -1,12 +1,12 @@
-package models
+package model
 
 /*
- * @Script: test.go
+ * @Script: model.go
  * @Author: pangxiaobo
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-07 16:55:04
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-11-27 20:06:29
+ * @Last Modified At: 2018-12-12 14:24:45
  * @Description: This is description.
  */
 import (

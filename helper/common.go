@@ -13,6 +13,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"net"
+	"regexp"
 )
 
 //md5加密
@@ -38,4 +39,13 @@ func GetLocalIp() string {
 		}
 	}
 	return "localhost"
+}
+
+// 是否是email
+func IsEmail(email string) bool {
+	if email == "" {
+		return false
+	}
+	ok, _ := regexp.MatchString(`^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[0-9a-zA-Z]{2,3}$`, email)
+	return ok
 }

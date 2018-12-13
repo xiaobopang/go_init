@@ -1,4 +1,4 @@
-package controllers
+package controller
 
 /*
  * @Script: test.go
@@ -6,7 +6,7 @@ package controllers
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-06 14:50:15
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-12-11 14:39:12
+ * @Last Modified At: 2018-12-12 14:25:46
  * @Description: This is description.
  */
 
@@ -14,9 +14,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/go_init/helpers"
-	"github.com/go_init/libs"
-	"github.com/go_init/models"
+	"github.com/go_init/helper"
+	"github.com/go_init/lib"
+	"github.com/go_init/model"
 	"strconv"
 	"time"
 )
@@ -39,7 +39,7 @@ func (t *TestController) GetUser(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Query("id"))
 	fmt.Println(id)
 
-	res, _ := models.GetUserById(id)
+	res, _ := model.GetUserById(id)
 
 	c.JSON(200, gin.H{
 		"code":      200,
@@ -58,7 +58,7 @@ func (t *TestController) AddUser(c *gin.Context) {
 	gender, _ := strconv.Atoi(c.DefaultPostForm("gender", "1"))
 	email := c.PostForm("email")
 
-	res := models.AddUser(name, password, age, gender, email)
+	res := model.AddUser(name, password, age, gender, email)
 
 	c.JSON(200, gin.H{
 		"code":      200,
@@ -74,7 +74,7 @@ func (t *TestController) DelUser(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Query("id"))
 	fmt.Println(id)
 
-	res := models.DelUser(id)
+	res := model.DelUser(id)
 
 	c.JSON(200, gin.H{
 		"code":      200,
@@ -97,7 +97,7 @@ func (t *TestController) UptUser(c *gin.Context) {
 	data["email"] = c.PostForm("email")
 	data["updated_at"] = time.Now().Unix()
 
-	res := models.UptUser(id, data)
+	res := model.UptUser(id, data)
 
 	c.JSON(200, gin.H{
 		"code":      200,
@@ -110,8 +110,8 @@ func (t *TestController) UptUser(c *gin.Context) {
 //Redis 测试
 func (t *TestController) RedisTest(c *gin.Context) {
 	redisKey := c.Query("redisKey")
-	fmt.Println(redisKey)
-	userInfo, err := libs.GetKey(redisKey)
+
+	userInfo, err := lib.GetKey(redisKey)
 	if err != nil {
 		data := make(map[string]interface{})
 		data["username"] = "jack"
@@ -120,7 +120,7 @@ func (t *TestController) RedisTest(c *gin.Context) {
 		data["email"] = "test@test.com"
 		data["updated_at"] = time.Now().Unix()
 		userInfo, err := json.Marshal(data)
-		libs.SetKey(redisKey, userInfo, 3600)
+		lib.SetKey(redisKey, userInfo, 3600)
 		if err != nil {
 			fmt.Println(err)
 		}
