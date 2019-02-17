@@ -12,12 +12,13 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+	"runtime"
+
 	"github.com/gin-gonic/gin"
 	"github.com/go_init/libs"
 	"github.com/go_init/models"
 	"github.com/go_init/routers"
-	"net/http"
-	"runtime"
 )
 
 func main() {
@@ -41,6 +42,6 @@ func main() {
 		WriteTimeout:   serverConfig.WriteTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
-
+	fmt.Println("Server init on port ", serverConfig.HTTPPort)
 	s.ListenAndServe()
 }

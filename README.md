@@ -18,7 +18,15 @@
 
     注意：有可能出现没有执行权限的情况，执行 sudo chmod +x run.sh来解决
 
+    1. Mysql
 
+    2. Redis
+
+    3. Websocket
+
+    4. RabbitMQ
+
+    5. ElasticSearch
 
 ### Router 示例
 

@@ -12,11 +12,12 @@ package models
 
 import (
 	"fmt"
+	"log"
+	"time"
+
 	"github.com/go_init/libs"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"log"
-	"time"
 )
 
 type Model struct {
@@ -55,7 +56,7 @@ func InitDB(conf libs.ServerConfig) {
 	DB.Callback().Delete().Replace("gorm:delete", deleteCallback)
 	DB.DB().SetMaxIdleConns(10)
 	DB.DB().SetMaxOpenConns(100)
-
+	fmt.Println("database init on port ", conf.Host)
 }
 
 // updateTimeStampForCreateCallback will set `CreatedOn`, `ModifiedOn` when creating

@@ -2,8 +2,9 @@ package libs
 
 import (
 	"fmt"
-	"github.com/gomodule/redigo/redis"
 	"time"
+
+	"github.com/gomodule/redigo/redis"
 )
 
 var RedisPool *redis.Pool
@@ -39,7 +40,7 @@ func init() {
 			return err
 		},
 	}
-	fmt.Println("Redis init....")
+	fmt.Println("Redis init on port ", config.RedisHost)
 }
 
 // get
