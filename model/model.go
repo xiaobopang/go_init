@@ -1,4 +1,4 @@
-package models
+package model
 
 /*
  * @Script: model.go
@@ -6,7 +6,7 @@ package models
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-27 18:20:54
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-11-27 20:05:01
+ * @Last Modified At: 2018-12-12 14:24:54
  * @Description: This is description.
  */
 
@@ -15,7 +15,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/go_init/libs"
+	"github.com/go_init/lib"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
@@ -29,7 +29,7 @@ type Model struct {
 
 var DB *gorm.DB
 
-func InitDB(conf libs.ServerConfig) {
+func InitDB(conf lib.ServerConfig) {
 	var err error
 	dbParams := fmt.Sprintf("%v:%v@tcp(%v)/%v?charset=utf8&parseTime=True&loc=Local",
 		conf.User,

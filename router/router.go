@@ -6,7 +6,7 @@ package routers
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-27 18:19:27
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-12-11 14:39:43
+ * @Last Modified At: 2018-12-12 14:25:18
  * @Description: This is description.
  */
 
@@ -14,14 +14,14 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go_init/controllers"
+	"github.com/go_init/controller"
 	"github.com/go_init/middleware"
 )
 
-var indexCtl = new(controllers.IndexController)
-var testCtl = new(controllers.TestController)
-var wsCtl = new(controllers.WsController)
-var mqCtl = new(controllers.MqController)
+var indexCtl = new(controller.IndexController)
+var testCtl = new(controller.TestController)
+var wsCtl = new(controller.WsController)
+var mqCtl = new(controller.MqController)
 
 func SetupRouter() *gin.Engine {
 	router := gin.Default()

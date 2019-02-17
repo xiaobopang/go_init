@@ -1,12 +1,12 @@
-package libs
+package lib
 
 /*
- * @Script: server.go
+ * @Script: config.go
  * @Author: pangxiaobo
  * @Email: 10846295@qq.com
  * @Create At: 2018-11-06 20:30:10
  * @Last Modified By: pangxiaobo
- * @Last Modified At: 2018-12-11 14:08:24
+ * @Last Modified At: 2018-12-12 14:23:50
  * @Description: This is description.
  */
 

@@ -31,20 +31,20 @@
 ### Router 示例
 
 ```
-        package routers
+        package router
 
         import (
                 "net/http"
 
                 "github.com/gin-gonic/gin"
-                "github.com/go_init/controllers"
+                "github.com/go_init/controller"
                 "github.com/go_init/middleware"
         )
 
-        var indexCtl = new(controllers.IndexController)
-        var testCtl = new(controllers.TestController)
-        var wsCtl = new(controllers.WsController)
-        var mqCtl = new(controllers.MqController)
+        var indexCtl = new(controller.IndexController)
+        var testCtl = new(controller.TestController)
+        var wsCtl = new(controller.WsController)
+        var mqCtl = new(controller.MqController)
 
         func SetupRouter() *gin.Engine {
                 router := gin.Default()
@@ -106,10 +106,12 @@
         package controllers
 
         import (
+                "encoding/json"
                 "fmt"
                 "github.com/gin-gonic/gin"
-                "github.com/go_init/helpers"
-                "github.com/go_init/models"
+                "github.com/go_init/helper"
+                "github.com/go_init/lib"
+                "github.com/go_init/model"
                 "strconv"
                 "time"
         )
@@ -132,7 +134,7 @@
                 id, _ := strconv.Atoi(c.Query("id"))
                 fmt.Println(id)
 
-                res := models.GetUserById(id)
+                res, _ := models.GetUserById(id)
 
                 c.JSON(200, gin.H{
                         "code":      200,
@@ -185,8 +187,8 @@
 
                 data["username"] = c.PostForm("name")
                 data["password"] = helpers.EncodeMD5(c.PostForm("password"))
-                data["age"] = c.PostForm("age")
-                data["gender"] = c.PostForm("gender")
+                data["age"], _ = strconv.Atoi(c.DefaultPostForm("age", "20"))
+                data["gender"], _ = strconv.Atoi(c.DefaultPostForm("gender", "1"))
                 data["email"] = c.PostForm("email")
                 data["updated_at"] = time.Now().Unix()
 
@@ -200,12 +202,39 @@
                 })
         }
 
+        //Redis 测试
+        func (t *TestController) RedisTest(c *gin.Context) {
+                redisKey := c.Query("redisKey")
+                fmt.Println(redisKey)
+                userInfo, err := libs.GetKey(redisKey)
+                if err != nil {
+                        data := make(map[string]interface{})
+                        data["username"] = "jack"
+                        data["age"] = 22
+                        data["gender"] = "man"
+                        data["email"] = "test@test.com"
+                        data["updated_at"] = time.Now().Unix()
+                        userInfo, err := json.Marshal(data)
+                        libs.SetKey(redisKey, userInfo, 3600)
+                        if err != nil {
+                                fmt.Println(err)
+                        }
+                }
+                c.JSON(200, gin.H{
+                        "code":      200,
+                        "data":      userInfo,
+                        "msg":       "success",
+                        "timestamp": time.Now().Unix(),
+                })
+        }
+
+
 ```
 
 ### model 示例
 
 ```
-        package models
+        package model
 
         import (
                 "time"
@@ -267,7 +296,7 @@
 #####  前端通过访问 ws://localhost:7777/ws 即可与服务端建立websocket连接
 
 ```
-        package controllers
+        package controller
 
         import (
                 "errors"
@@ -434,7 +463,7 @@
 ### RabbitMQ 示例
 
 ```
-        package controllers
+        package controller
 
         import (
                 "encoding/json"

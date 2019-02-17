@@ -1,11 +1,12 @@
-package controllers
+package controller
 
 /*
- * Created Date: Saturday December 8th 2018
+ * @Script: mq.go
  * Author: Pangxiaobo
  * Last Modified: Saturday December 8th 2018 1:46:07 pm
  * Modified By: the developer formerly known as Pangxiaobo at <10846295@qq.com>
- * Copyright (c) 2018 Pangxiaobo
+ * @Last Modified By: pangxiaobo
+ * @Last Modified At: 2018-12-12 14:24:22
  */
 
 import (
