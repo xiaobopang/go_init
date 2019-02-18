@@ -37,8 +37,8 @@
                 "net/http"
 
                 "github.com/gin-gonic/gin"
-                "github.com/go_init/controller"
-                "github.com/go_init/middleware"
+                "github.com/xiaobopang/go_init/controller"
+                "github.com/xiaobopang/go_init/middleware"
         )
 
         var indexCtl = new(controller.IndexController)
@@ -109,9 +109,9 @@
                 "encoding/json"
                 "fmt"
                 "github.com/gin-gonic/gin"
-                "github.com/go_init/helper"
-                "github.com/go_init/lib"
-                "github.com/go_init/model"
+                "github.com/xiaobopang/go_init/helper"
+                "github.com/xiaobopang/go_init/lib"
+                "github.com/xiaobopang/go_init/model"
                 "strconv"
                 "time"
         )

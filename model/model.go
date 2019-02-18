@@ -15,7 +15,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/go_init/lib"
+	"github.com/xiaobopang/go_init/lib"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )

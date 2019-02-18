@@ -13,12 +13,13 @@ package controller
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/go_init/helper"
-	"github.com/go_init/lib"
-	"github.com/go_init/model"
 	"strconv"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/xiaobopang/go_init/helper"
+	"github.com/xiaobopang/go_init/lib"
+	"github.com/xiaobopang/go_init/model"
 )
 
 type TestController struct{}
@@ -53,7 +54,7 @@ func (t *TestController) GetUser(c *gin.Context) {
 func (t *TestController) AddUser(c *gin.Context) {
 
 	name := c.PostForm("name")
-	password := helpers.EncodeMD5(c.PostForm("password"))
+	password := helper.EncodeMD5(c.PostForm("password"))
 	age, _ := strconv.Atoi(c.DefaultPostForm("age", "20"))
 	gender, _ := strconv.Atoi(c.DefaultPostForm("gender", "1"))
 	email := c.PostForm("email")
@@ -91,7 +92,7 @@ func (t *TestController) UptUser(c *gin.Context) {
 	data := make(map[string]interface{})
 
 	data["username"] = c.PostForm("name")
-	data["password"] = helpers.EncodeMD5(c.PostForm("password"))
+	data["password"] = helper.EncodeMD5(c.PostForm("password"))
 	data["age"], _ = strconv.Atoi(c.DefaultPostForm("age", "20"))
 	data["gender"], _ = strconv.Atoi(c.DefaultPostForm("gender", "1"))
 	data["email"] = c.PostForm("email")

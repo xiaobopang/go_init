@@ -15,13 +15,10 @@ import (
 	"net/http"
 	"runtime"
 
-	"net/http"
-	"runtime"
-
 	"github.com/gin-gonic/gin"
-	"github.com/go_init/lib"
-	"github.com/go_init/model"
-	"github.com/go_init/router"
+	"github.com/xiaobopang/go_init/lib"
+	"github.com/xiaobopang/go_init/model"
+	"github.com/xiaobopang/go_init/router"
 )
 
 func main() {
@@ -36,7 +33,7 @@ func main() {
 	//set the number of CPU processor will be used
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
-	router := routers.SetupRouter()
+	router := router.SetupRouter()
 
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%d", serverConfig.HTTPPort),
