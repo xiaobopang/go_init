@@ -15,12 +15,13 @@ import (
 	"net/http"
 	"runtime"
 
+	"net/http"
+	"runtime"
+
 	"github.com/gin-gonic/gin"
 	"github.com/go_init/lib"
 	"github.com/go_init/model"
 	"github.com/go_init/router"
-	"net/http"
-	"runtime"
 )
 
 func main() {
