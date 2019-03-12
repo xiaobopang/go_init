@@ -14,6 +14,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/xiaobopang/go_init/controller"
 	"github.com/xiaobopang/go_init/middleware"
 )
@@ -57,10 +58,16 @@ func SetupRouter() *gin.Engine {
 		wsCtl.WsHandler(c.Writer, c.Request)
 	})
 
-	v1 := router.Group("/v1")
-	v1.Use(middleware.CORS(middleware.CORSOptions{}))
+	router.GET("/get_token", testCtl.GetToken)
+	// Authentication required
+	var db *gorm.DB
+	authorized := router.Group("/v1")
+	authorized.Use(middleware.JWTMiddleware(db))
 	{
-		v1.GET("/test", testCtl.GetNick)
+		users := authorized.Group("/user")
+		{
+			users.GET("/:id", testCtl.GetUser)
+		}
 	}
 
 	v2 := router.Group("/v2")

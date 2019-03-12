@@ -133,3 +133,17 @@ func (t *TestController) RedisTest(c *gin.Context) {
 		"timestamp": time.Now().Unix(),
 	})
 }
+
+func (t *TestController) GetToken(c *gin.Context) {
+	token, err := lib.GenerateToken(1, "pang@pang.com")
+	if err != nil {
+		fmt.Println("err: ", err)
+	}
+	c.JSON(200, gin.H{
+		"code":      200,
+		"data":      token,
+		"msg":       "success",
+		"timestamp": time.Now().Unix(),
+	})
+
+}
