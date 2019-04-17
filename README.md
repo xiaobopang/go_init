@@ -26,7 +26,7 @@
     
     还可以压缩到原文件大小的五分之一。具体操作如下：
 
-[UPX安装](https://github.com/upx/upx)  
+[UPX安装](https://github.com/upx/upx) 👈点击
 
         1、go build -ldflags "-s -w" -o go_init main.go
 
