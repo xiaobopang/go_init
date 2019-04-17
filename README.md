@@ -10,7 +10,7 @@
 
     注意vendor所在的目录一定要在第一个GOPAHT下。
 
-    通过 go build -o go_init main.go 来生成执行文件
+    通过 go build -o go_init main.go 来生成执行文件,其他平台编译方式见文档底部。
     
     压缩go build的二进制文件,可使用 go build -ldflags "-s -w" -o go_init main.go
 
@@ -33,7 +33,7 @@
         2、upx go_init
 
         结果如下：
-        ![](./1.png =150x70)
+        ![执行结果](./1.png)
 
     启动服务：./run.sh start
 
