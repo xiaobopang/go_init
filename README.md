@@ -26,14 +26,14 @@
     
     还可以压缩到原文件大小的五分之一。具体操作如下：
 
-    [UPX安装](https://github.com/upx/upx)
+[UPX](https://github.com/upx/upx)  
 
         1、go build -ldflags "-s -w" -o go_init main.go
 
         2、upx go_init
 
         结果如下：
-        ![执行结果](./1.png)
+![执行结果](./1.png)
 
     启动服务：./run.sh start
 
