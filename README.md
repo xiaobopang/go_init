@@ -12,6 +12,33 @@
 
     通过 go build -o go_init main.go 来生成执行文件
     
+    压缩go build的二进制文件,可使用 go build -ldflags "-s -w" -o go_init main.go
+
+    这里的 -ldflags 参数最终会在 go tool link 的时候传给它， go tool link -h 解释如下
+    
+    ```
+        ...
+        -s    disable symbol table
+        -w    disable DWARF generation
+
+    ```
+    这样处理可以删除掉调试符号,从而显著减小了文件大小（平均20%）,也可以相对的隐藏一些源码信息。
+    
+    如果你觉得这样压缩之后文件还是比较大，那么我们还可以再加一个UPX壳，这样编译过后的二进制文件
+    
+    还可以压缩到原文件大小的五分之一。具体操作如下：
+
+    [UPX安装](https://github.com/upx/upx)
+
+    ```
+        1、go build -ldflags "-s -w" -o go_init main.go
+
+        2、upx go_init
+
+        结果如下：
+        ![](./1.png =150x70)
+    ```
+
     启动服务：./run.sh start
 
     停止服务：./run.sh stop
