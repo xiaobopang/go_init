@@ -1,7 +1,8 @@
 logs/*
-vendor/*
+vendor
 !vendor/vendor.json
 .DS_Store
 /.idea
 /.vscode
 *.log
+main.S
