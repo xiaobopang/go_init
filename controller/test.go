@@ -50,11 +50,27 @@ func (t *TestController) GetUser(c *gin.Context) {
 	})
 }
 
+//获取用户
+func (t *TestController) UserList(c *gin.Context) {
+	keyword := c.Query("keyword")
+	pageNo := c.GetInt("page_number")
+	pageSize := c.GetInt("page_size")
+
+	res := model.UsersList(pageNo, pageSize, "username = ?", keyword)
+
+	c.JSON(200, gin.H{
+		"code":      200,
+		"data":      res,
+		"msg":       "success",
+		"timestamp": time.Now().Unix(),
+	})
+}
+
 //新增用户
 func (t *TestController) AddUser(c *gin.Context) {
 
 	name := c.PostForm("name")
-	password := helper.EncodeMD5(c.PostForm("password"))
+	password := helper.Md5(c.PostForm("password"))
 	age, _ := strconv.Atoi(c.DefaultPostForm("age", "20"))
 	gender, _ := strconv.Atoi(c.DefaultPostForm("gender", "1"))
 	email := c.PostForm("email")
@@ -92,7 +108,7 @@ func (t *TestController) UptUser(c *gin.Context) {
 	data := make(map[string]interface{})
 
 	data["username"] = c.PostForm("name")
-	data["password"] = helper.EncodeMD5(c.PostForm("password"))
+	data["password"] = helper.Md5(c.PostForm("password"))
 	data["age"], _ = strconv.Atoi(c.DefaultPostForm("age", "20"))
 	data["gender"], _ = strconv.Atoi(c.DefaultPostForm("gender", "1"))
 	data["email"] = c.PostForm("email")

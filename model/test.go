@@ -16,12 +16,43 @@ import (
 type User struct {
 	ID        int    `json:"id" gorm:"index"`
 	Username  string `json:"username"`
-	Password  string `json:"password"`
+	Password  string `json:"-"`
 	Age       int    `json:"age"`
 	Email     string `json:"email"`
 	Gender    int    `json:"gender"`
 	CreatedAt int64  `json:"created_at"`
 	UpdatedAt int64  `json:"updated_at"`
+}
+
+type Page struct {
+	TotalCount int
+	List       interface{}
+}
+
+//通过 args可以动态传递多个参数
+func UsersList(pageNo int, pageSize int, args ...interface{}) (page Page) {
+	var users []User
+	var userCount []User
+	var count uint
+
+	db := DB.Table("user")
+	if len(args) >= 2 {
+		db = db.Where(args[0], args[1:]...)
+	} else {
+		db = db.Where(args[0])
+	}
+	db.Select("id,username,age,email,gender,created_at").Limit(pageSize).Offset((pageNo - 1) * pageSize).Scan(&users)
+
+	if pageNo == 1 {
+		db.Select("id,username,age,email,gender,created_at").Scan(&userCount).Count(&count)
+		TotalCount := count
+		page.TotalCount = int(TotalCount)
+	} else {
+		TotalCount := len(users)
+		page.TotalCount = int(TotalCount)
+	}
+	page.List = users
+	return page
 }
 
 func GetUserById(id int) ([]*User, error) {

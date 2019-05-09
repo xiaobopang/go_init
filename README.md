@@ -150,6 +150,22 @@
                         "timestamp": time.Now().Unix(),
                 })
         }
+        //获取用户列表
+        func (t *TestController) UserList(c *gin.Context) {
+                keyword := c.Query("keyword")
+                pageNo := c.GetInt("page_number")
+                pageSize := c.GetInt("page_size")
+                
+                //查询是支持动态传递多个参数
+                res := model.UsersList(pageNo, pageSize, "username = ?", keyword)
+
+                c.JSON(200, gin.H{
+                        "code":      200,
+                        "data":      res,
+                        "msg":       "success",
+                        "timestamp": time.Now().Unix(),
+                })
+        }
 
         //获取用户
         func (t *TestController) GetUser(c *gin.Context) {
@@ -274,6 +290,36 @@
                 UpdatedAt int64  `json:"updated_at"`
         }
 
+        type Page struct {
+                TotalCount int
+                List       interface{}
+        }
+
+        //通过 args可以动态传递多个参数
+        func UsersList(pageNo int, pageSize int, args ...interface{}) (page Page) {
+                var users []User
+                var userCount []User
+                var count uint
+
+                db := DB.Table("user")
+                if len(args) >= 2 {
+                        db = db.Where(args[0], args[1:]...)
+                } else {
+                        db = db.Where(args[0])
+                }
+                db.Select("id,username,age,email,gender,created_at").Limit(pageSize).Offset((pageNo - 1) * pageSize).Scan(&users)
+
+                if pageNo == 1 {
+                        db.Select("id,username,age,email,gender,created_at").Scan(&userCount).Count(&count)
+                        TotalCount := count
+                        page.TotalCount = int(TotalCount)
+                } else {
+                        TotalCount := len(users)
+                        page.TotalCount = int(TotalCount)
+                }
+                page.List = users
+                return page
+        }
         func GetUserById(id int) *User {
                 var user User
                 DB.First(&user, "id = ?", id)
