@@ -30,39 +30,46 @@ func SetupRouter() *gin.Engine {
 
 	router.GET("/", indexCtl.Welcome)
 	router.NoRoute(indexCtl.Handle404)
-	router.GET("/redis", testCtl.RedisTest) //redis 测试
+
+	// 简单的路由组: v1
+	v1 := router.Group("/v1")
+	{
+		v1.GET("/redis", testCtl.RedisTest) //redis 测试
+
+		v1.POST("/exchange", func(c *gin.Context) {
+			mqCtl.ExchangeHandler(c.Writer, c.Request)
+		})
+		v1.POST("/queue/bind", func(c *gin.Context) {
+			mqCtl.QueueBindHandler(c.Writer, c.Request)
+		})
+		v1.GET("/queue", func(c *gin.Context) {
+			mqCtl.QueueHandler(c.Writer, c.Request)
+		}) //consume queue
+		v1.POST("/queue", func(c *gin.Context) {
+			mqCtl.QueueHandler(c.Writer, c.Request)
+		}) //declare queue
+		v1.DELETE("/queue", func(c *gin.Context) {
+			mqCtl.QueueHandler(c.Writer, c.Request)
+		}) //delete queue
+		v1.POST("/publish", func(c *gin.Context) {
+			mqCtl.PublishHandler(c.Writer, c.Request)
+		})
+		v1.GET("/ws", func(c *gin.Context) {
+			wsCtl.WsHandler(c.Writer, c.Request)
+		})
+
+		v1.GET("/get_token", testCtl.GetToken)
+	}
 
 	router.GET("/redirect", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "https://www.unclepang.com/")
 	})
-	router.POST("/exchange", func(c *gin.Context) {
-		mqCtl.ExchangeHandler(c.Writer, c.Request)
-	})
-	router.POST("/queue/bind", func(c *gin.Context) {
-		mqCtl.QueueBindHandler(c.Writer, c.Request)
-	})
-	router.GET("/queue", func(c *gin.Context) {
-		mqCtl.QueueHandler(c.Writer, c.Request)
-	}) //consume queue
-	router.POST("/queue", func(c *gin.Context) {
-		mqCtl.QueueHandler(c.Writer, c.Request)
-	}) //declare queue
-	router.DELETE("/queue", func(c *gin.Context) {
-		mqCtl.QueueHandler(c.Writer, c.Request)
-	}) //delete queue
-	router.POST("/publish", func(c *gin.Context) {
-		mqCtl.PublishHandler(c.Writer, c.Request)
-	})
-	router.GET("/ws", func(c *gin.Context) {
-		wsCtl.WsHandler(c.Writer, c.Request)
-	})
-
-	router.GET("/get_token", testCtl.GetToken)
 
 	v2 := router.Group("/v2")
 	v2.Use(middleware.CORS(middleware.CORSOptions{}))
 	{
 		v2.GET("/user", testCtl.GetUser)
+		v2.GET("/es", testCtl.ES)
 		v2.POST("/user", testCtl.AddUser)
 		v2.DELETE("/user", testCtl.DelUser)
 		v2.PATCH("/user", testCtl.UptUser)

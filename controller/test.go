@@ -16,6 +16,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/elastic/go-elasticsearch"
 	"github.com/gin-gonic/gin"
 	"github.com/xiaobopang/go_init/helper"
 	"github.com/xiaobopang/go_init/lib"
@@ -162,4 +163,29 @@ func (t *TestController) GetToken(c *gin.Context) {
 		"timestamp": time.Now().Unix(),
 	})
 
+}
+
+// es 测试
+func (t *TestController) ES(c *gin.Context) {
+	cfg := elasticsearch.Config{
+		Addresses: []string{
+			"http://127.0.0.1:9201",
+		},
+	}
+	es, err := elasticsearch.NewClient(cfg)
+	if err != nil {
+		fmt.Println("elasticsearch has error: ", err)
+	}
+	// 1. Get cluster info
+	//
+	res, err := es.Info()
+	if err != nil {
+		fmt.Println("Error getting response: %s", err)
+	}
+	c.JSON(200, gin.H{
+		"code":      200,
+		"data":      res,
+		"msg":       "success",
+		"timestamp": time.Now().Unix(),
+	})
 }
